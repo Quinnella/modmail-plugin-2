@@ -96,7 +96,7 @@ class Announcements(commands.Cog):
         await ctx.send("Starting an interactive process to create an announcement")
 
         await ctx.send(
-            embed=await self.generate_embed("Do you want it to be an embed? `[y/n]`")
+            embed=await self.generate_embed("Do you want it to be an embed? `[y/n]`", color=self.bot.main_color)
         )
 
         embed_res: discord.Message = await self.bot.wait_for("message", check=check)
@@ -107,7 +107,7 @@ class Announcements(commands.Cog):
             await ctx.send(
                 embed=await self.generate_embed(
                     "Okay, let's do a no-embed announcement."
-                    "\nWhat's the announcement?"
+                    "\nWhat's the announcement?", color=self.bot.main_color
                 )
             )
             announcement = await self.bot.wait_for("message", check=check)
@@ -117,7 +117,7 @@ class Announcements(commands.Cog):
             else:
                 await ctx.send(
                     embed=await self.generate_embed(
-                        "To which channel should I send the announcement?"
+                        "To which channel should I send the announcement?", color=self.bot.main_color
                     )
                 )
                 channel: discord.Message = await self.bot.wait_for(
@@ -138,7 +138,7 @@ class Announcements(commands.Cog):
             embed = discord.Embed()
             await ctx.send(
                 embed=await self.generate_embed(
-                    "Should the embed have a title? `[y/n]`"
+                    "Should the embed have a title? `[y/n]`", color=self.bot.main_color
                 )
             )
             t_res = await self.bot.wait_for("message", check=check)
@@ -149,14 +149,14 @@ class Announcements(commands.Cog):
                 await ctx.send(
                     embed=await self.generate_embed(
                         "What should the title of the embed be?"
-                        "\n**Must not exceed 256 characters**"
+                        "\n**Must not exceed 256 characters**", color=self.bot.main_color
                     )
                 )
                 tit = await self.bot.wait_for("message", check=title_check)
                 embed.title = tit.content
             await ctx.send(
                 embed=await self.generate_embed(
-                    "Should the embed have a description?`[y/n]`"
+                    "Should the embed have a description?`[y/n]`", color=self.bot.main_color
                 )
             )
             d_res: discord.Message = await self.bot.wait_for("message", check=check)
@@ -167,7 +167,7 @@ class Announcements(commands.Cog):
                 await ctx.send(
                     embed=await self.generate_embed(
                         "What do you want as the description for the embed?"
-                        "\n**Must not exceed 2048 characters**"
+                        "\n**Must not exceed 2048 characters**", color=self.bot.main_color
                     )
                 )
                 des = await self.bot.wait_for("message", check=description_check)
@@ -175,7 +175,7 @@ class Announcements(commands.Cog):
 
             await ctx.send(
                 embed=await self.generate_embed(
-                    "Should the embed have a thumbnail?`[y/n]`"
+                    "Should the embed have a thumbnail?`[y/n]`", color=self.bot.main_color
                 )
             )
             th_res: discord.Message = await self.bot.wait_for("message", check=check)
@@ -185,14 +185,14 @@ class Announcements(commands.Cog):
             elif cancel_check(th_res) is False and th_res.content.lower() == "y":
                 await ctx.send(
                     embed=await self.generate_embed(
-                        "What's the thumbnail of the embed? Enter a " "valid URL"
+                        "What's the thumbnail of the embed? Enter a " "valid URL", color=self.bot.main_color
                     )
                 )
                 thu = await self.bot.wait_for("message", check=check)
                 embed.set_thumbnail(url=thu.content)
 
             await ctx.send(
-                embed=await self.generate_embed("Should the embed have a image?`[y/n]`")
+                embed=await self.generate_embed("Should the embed have a image?`[y/n]`", color=self.bot.main_color)
             )
             i_res: discord.Message = await self.bot.wait_for("message", check=check)
             if cancel_check(i_res) is True:
@@ -201,14 +201,14 @@ class Announcements(commands.Cog):
             elif cancel_check(i_res) is False and i_res.content.lower() == "y":
                 await ctx.send(
                     embed=await self.generate_embed(
-                        "What's the image of the embed? Enter a " "valid URL"
+                        "What's the image of the embed? Enter a " "valid URL", color=self.bot.main_color
                     )
                 )
                 i = await self.bot.wait_for("message", check=check)
                 embed.set_image(url=i.content)
 
             await ctx.send(
-                embed=await self.generate_embed("Will the embed have a footer?`[y/n]`")
+                embed=await self.generate_embed("Will the embed have a footer?`[y/n]`", color=self.bot.main_color)
             )
             f_res: discord.Message = await self.bot.wait_for("message", check=check)
             if cancel_check(f_res) is True:
@@ -218,7 +218,7 @@ class Announcements(commands.Cog):
                 await ctx.send(
                     embed=await self.generate_embed(
                         "What do you want the footer of the embed to be?"
-                        "\n**Must not exceed 2048 characters**"
+                        "\n**Must not exceed 2048 characters**", color=self.bot.main_color
                     )
                 )
                 foo = await self.bot.wait_for("message", check=footer_check)
@@ -226,7 +226,7 @@ class Announcements(commands.Cog):
 
             await ctx.send(
                 embed=await self.generate_embed(
-                    "Do you want it to have a color?`[y/n]`"
+                    "Do you want it to have a color?`[y/n]`", color=self.bot.main_color
                 )
             )
             c_res: discord.Message = await self.bot.wait_for("message", check=check)
@@ -237,7 +237,7 @@ class Announcements(commands.Cog):
                 await ctx.send(
                     embed=await self.generate_embed(
                         "What color should the embed have? "
-                        "Please provide a valid hex color"
+                        "Please provide a valid hex color", color=self.bot.main_color
                     )
                 )
                 colo = await self.bot.wait_for("message", check=check)
@@ -261,7 +261,7 @@ class Announcements(commands.Cog):
 
             await ctx.send(
                 embed=await self.generate_embed(
-                    "In which channel should I send the announcement?"
+                    "In which channel should I send the announcement?", color=self.bot.main_color
                 )
             )
             channel: discord.Message = await self.bot.wait_for("message", check=check)
