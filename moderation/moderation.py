@@ -7,7 +7,7 @@ from core.models import PermissionLevel
 
 class Moderation(commands.Cog):
     """
-    Moderate ya server using modmail pog
+    Moderate your Server!
     """
     def __init__(self, bot):
         self.bot = bot
@@ -44,7 +44,7 @@ class Moderation(commands.Cog):
     ):
         """Ban one or more users.
         Usage:
-        {prefix}ban @member 10 Advertising their own products
+        {prefix}ban @member 10 DM Advertising
         {prefix}ban @member1 @member2 @member3 Spamming
         """
         config = await self.db.find_one({"_id": "config"})
@@ -72,7 +72,7 @@ class Moderation(commands.Cog):
                 )
                 if reason:
                     embed.add_field(name="Reason", value=reason, inline=False)
-                await ctx.send(f"🚫 | {member} is banned!")
+                await ctx.send(f"| {member} is banned!")
                 await channel.send(embed=embed)
         except discord.Forbidden:
             await ctx.send("I don't have the proper permissions to ban people.")
@@ -89,7 +89,7 @@ class Moderation(commands.Cog):
     ):
         """Kick one or more users.
         Usage:
-        {prefix}kick @member Being rude
+        {prefix}kick @member Warning limit has been exceeded
         {prefix}kick @member1 @member2 @member3 Advertising
         """
         config = await self.db.find_one({"_id": "config"})
@@ -115,7 +115,7 @@ class Moderation(commands.Cog):
                 )
                 if reason is not None:
                     embed.add_field(name="Reason", value=reason, inline=False)
-                await ctx.send(f"🦶 | {member} is kicked!")
+                await ctx.send(f"| {member} is kicked!")
                 await channel.send(embed=embed)
         except discord.Forbidden:
             await ctx.send("I don't have the proper permissions to kick people.")
@@ -131,6 +131,7 @@ class Moderation(commands.Cog):
         """Warn a member.
         Usage:
         {prefix}warn @member Spoilers
+        {prefix}warn userid Spoilers
         """
         if member.bot:
             return await ctx.send("Bots can't be warned.")
@@ -238,7 +239,7 @@ class Moderation(commands.Cog):
                     "Otherwise, send anything else to abort.\n"
                     "**Unexpected bad things might happen if you decide to continue!**"
                 ),
-                color=discord.Color.red(),
+                color=self.bot.main_color,
             )
         )
         def surecheck(m):
@@ -278,9 +279,6 @@ class Moderation(commands.Cog):
                     title="Nuke",
                     description="This channel has been nuked!",
                     color=self.bot.main_color,
-                )
-                .set_image(
-                    url="https://cdn.discordapp.com/attachments/600843048724987925/600843407228928011/tenor.gif"
                 )
                 .set_footer(text=f"This is the {case} case.")
             )
