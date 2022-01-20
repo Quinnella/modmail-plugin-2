@@ -1,0 +1,26 @@
+[
+    {
+        "embed": {
+            "Title": "Abadima",
+            "description": "I sponsored myself because I can lol\n Anyways Enjoy my GitHub! hehe~",
+            "color": 8978687,
+            "footer": {
+                "icon_url": "https://avatars.githubusercontent.com/u/39747270?v=4",
+                "text": "Epicness"
+            },
+            "thumbnail": {
+                "url": "https://avatars.githubusercontent.com/u/39747270?v=4"
+            },
+            "author": {
+                "name": "Neko",
+                "icon_url": "https://avatars.githubusercontent.com/u/39747270?v=4"
+            },
+            "fields": [
+                {
+                    "name": "Github",
+                    "value": "[**Click Here**](https://github.com/Abadima)"
+                }
+            ]
+        }
+    }
+]
