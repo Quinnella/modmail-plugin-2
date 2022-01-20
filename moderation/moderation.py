@@ -160,7 +160,7 @@ class Moderation(commands.Cog):
         await ctx.send(f"Successfully warned **{member}**\n`{reason}`")
         await channel.send(
             embed=await self.generateWarnEmbed(
-                str(member.id), str(ctx.author.id), len(userw), reason, color=self.bot.main_color
+                str(member.id), str(ctx.author.id), len(userw), reason
             )
         )
         del userw
