@@ -156,7 +156,7 @@ class Fun(Cog):
         """Ask 8 ball a question.
         Question must end with a question mark.
         """
-        embed = discord.Embed(title='Question: | :8ball:', description=question, color=0x2332e4)
+        embed = discord.Embed(title='Question: | :8ball:', description=question, color=self.bot.main_color)
         embed.add_field(name='Answer:', value=choice(self.ball), inline=False)
         
         if question.endswith("?") and question != "?":
@@ -220,7 +220,7 @@ class Fun(Cog):
                 upvotes = data.ups
                 title = data.title
                 subreddit = data.subreddit_name_prefixed
-                embed = discord.Embed(title=title, color=ctx.author.color)
+                embed = discord.Embed(title=title, color=self.bot.main_color)
                 embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
                 embed.set_image(url=image)
                 embed.set_footer(text=f"👍{upvotes}")
@@ -272,7 +272,7 @@ class Fun(Cog):
     @commands.command(aliases=['sc'])
     @commands.guild_only()
     async def smallcaps(self,ctx,*,message):
-        """ᴄᴏɴᴠᴇʀᴛ ʏᴏᴜʀ ᴛᴇxᴛ ᴛᴏ ꜱᴍᴀʟʟ ᴄᴀᴘꜱ!!"""
+        """Convert your text into small caps!"""
         alpha = list(string.ascii_lowercase)     
         converter = ['ᴀ', 'ʙ', 'ᴄ', 'ᴅ', 'ᴇ', 'ꜰ', 'ɢ', 'ʜ', 'ɪ', 'ᴊ', 'ᴋ', 'ʟ', 'ᴍ', 'ɴ', 'ᴏ', 'ᴘ', 'ǫ', 'ʀ', 'ꜱ', 'ᴛ', 'ᴜ', 'ᴠ', 'ᴡ', 'x', 'ʏ', 'ᴢ']
         new = ""
