@@ -61,7 +61,7 @@ class Moderation(commands.Cog):
                     delete_message_days=days, reason=f"{reason if reason else None}"
                 )
                 embed = discord.Embed(
-                    color=discord.Color.red(),
+                    color=self.bot.main_color,
                     title=f"{member} was banned!",
                     timestamp=datetime.datetime.utcnow(),
                 )
@@ -104,7 +104,7 @@ class Moderation(commands.Cog):
             for member in members:
                 await member.kick(reason=f"{reason if reason else None}")
                 embed = discord.Embed(
-                    color=discord.Color.red(),
+                    color=self.bot.main_color,
                     title=f"{member} was kicked!",
                     timestamp=datetime.datetime.utcnow(),
                 )
@@ -160,7 +160,7 @@ class Moderation(commands.Cog):
         await ctx.send(f"Successfully warned **{member}**\n`{reason}`")
         await channel.send(
             embed=await self.generateWarnEmbed(
-                str(member.id), str(ctx.author.id), len(userw), reason
+                str(member.id), str(ctx.author.id), len(userw), reason, color=self.bot.main_color
             )
         )
         del userw
@@ -194,7 +194,7 @@ class Moderation(commands.Cog):
             {"_id": "warns"}, {"$set": {str(member.id): []}}
         )
         await ctx.send(f"Successfully pardoned **{member}**\n`{reason}`")
-        embed = discord.Embed(color=discord.Color.blue())
+        embed = discord.Embed(color=self.bot.main_color)
         embed.set_author(
             name=f"Pardon | {member}",
             icon_url=member.avatar_url,
@@ -224,7 +224,7 @@ class Moderation(commands.Cog):
     @checks.has_permissions(PermissionLevel.OWNER)
     async def nuke(self, ctx, channel: discord.TextChannel = None):
         """
-        Nukes (deletes EVERY message in) a channel.
+        Nukes deletes EVERY message in a channel.
         You can mention a channel to nuke that one instead.
         """
         if channel == None:
@@ -235,8 +235,9 @@ class Moderation(commands.Cog):
                 title="Are you sure?",
                 description=(
                     f"This command will delete EVERY SINGLE MESSAGE in {tot} channel!\n"
-                    'If you are sure and responsible about what might happen send "Yes, do as I say!". '
+                    'If you are sure and responsible about what might happen send "Yes". '
                     "Otherwise, send anything else to abort.\n"
+                    
                     "**Unexpected bad things might happen if you decide to continue!**"
                 ),
                 color=self.bot.main_color,
@@ -252,7 +253,7 @@ class Moderation(commands.Cog):
             )
             ensured = False
         else:
-            if sure.content == "Yes, do as I say!":
+            if sure.content == "Yes":
                 ensured = True
             else:
                 await message.edit(
@@ -271,7 +272,7 @@ class Moderation(commands.Cog):
                     embed=discord.Embed(
                         title="Error",
                         description=f"I don't have enough permissions to nuke {tot} channel.",
-                        color=discord.Color.red(),
+                        color=self.bot.main_color,
                     ).set_footer(text="Please fix the permissions.")
                 )
             await new_channel.send(
@@ -300,7 +301,7 @@ class Moderation(commands.Cog):
                 embed=discord.Embed(
                     title="Error",
                     description=f"You can only purge up to 2000 messages.",
-                    color=discord.Color.red(),
+                    color=self.bot.main_color,
                 )
                 .set_footer(text=f"Use {ctx.prefix}nuke to purge the entire chat.")
                 .set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
@@ -313,7 +314,7 @@ class Moderation(commands.Cog):
                 embed=discord.Embed(
                     title="Error",
                     description="I don't have enough permissions to purge messages.",
-                    color=discord.Color.red(),
+                    color=self.bot.main_color,
                 )
                 .set_footer(text="Please fix the permissions.")
                 .set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
