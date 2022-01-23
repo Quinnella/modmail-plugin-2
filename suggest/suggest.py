@@ -53,7 +53,7 @@ class Suggest(commands.Cog):
                     suggestions = await self.coll.find_one({"_id": "suggestions"}) or {}
                     next_id = suggestions.get("next_id", 1)
 
-                    embed = discord.Embed(color=0x59E9FF)
+                    embed = discord.Embed(color=self.bot.main_color)
                     embed.set_author(name=f"Suggestion #{next_id}: Waiting")
                     embed.set_thumbnail(url=ctx.author.avatar_url)
                     embed.add_field(
@@ -160,7 +160,7 @@ class Suggest(commands.Cog):
         suggestion = suggestions.get(str(suggestion_id), None)
         if not suggestion:
             embed = discord.Embed(
-                colour=self.bot.error_color,
+                colour=0xe63030,
                 title=f"Suggestion id #{suggestion_id} not found.",
                 description="Try something else.",
             )
