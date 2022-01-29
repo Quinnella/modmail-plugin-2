@@ -8,7 +8,7 @@ from core.models import PermissionLevel
 
 class Giveaways(commands.Cog):
     """
-    Giveaways! Thanks Neko :D
+    Create & Manage Giveaways!
     """
 
     def __init__(self, bot):
@@ -80,6 +80,7 @@ class Giveaways(commands.Cog):
             if g_time <= 0:
                 if len(message.reactions) <= 0:
                     embed = message.embeds[0]
+                    embed.colour = self.bot.main_color
                     embed.description = (
                         f"Giveaway has ended!\n\nSadly no one participated :("
                     )
@@ -100,6 +101,7 @@ class Giveaways(commands.Cog):
                         reacted_users = await reactions.users().flatten()
                         if len(reacted_users) <= 1:
                             embed = message.embeds[0]
+                            embed.colour = self.bot.main_color
                             embed.description = (
                                 f"Giveaway has ended!\n\nSadly no one participated :("
                             )
@@ -129,7 +131,8 @@ class Giveaways(commands.Cog):
                         winners_text = ""
                         for winner in winners:
                             winners_text += f"<@{winner}> "
-
+                        
+                        embed.colour = self.bot.main_color
                         embed.description = f"Giveaway has ended!\n\n**{'Winners' if giveaway['winners'] > 1 else 'Winner'}:** {winners_text} "
                         embed.set_footer(
                             text=f"{giveaway['winners']} {'winners' if giveaway['winners'] > 1 else 'winner'} | "
@@ -198,7 +201,7 @@ class Giveaways(commands.Cog):
         def cancel_check(msg: discord.Message):
             return msg.content == "cancel" or msg.content == f"{ctx.prefix}cancel"
 
-        embed = discord.Embed(colour=0x00FF00)
+        embed = discord.Embed(colour=self.bot.main_color)
 
         await ctx.send(embed=self.generate_embed("What is the giveaway item?"))
         giveaway_item = await self.bot.wait_for("message", check=check)
@@ -262,7 +265,8 @@ class Giveaways(commands.Cog):
 
         if time_cancel is True:
             return
-
+        
+        embed.colour = self.bot.main_color
         embed.description = (
             f"React with 🎉 to enter the giveaway!\n\n"
             f"Time Remaining: **{datetime.fromtimestamp(giveaway_time).strftime('%d %H:%M:%S')}**"
@@ -327,6 +331,7 @@ class Giveaways(commands.Cog):
 
         if len(message.reactions) <= 0:
             embed = message.embeds[0]
+            embed.colour = self.bot.main_color
             embed.description = f"Giveaway has ended!\n\nSadly no one participated :("
             embed.set_footer(
                 text=f"{winners_count} {'winners' if winners_count > 1 else 'winner'} | Ended at"
@@ -340,6 +345,7 @@ class Giveaways(commands.Cog):
                 reacted_users = await reactions.users().flatten()
                 if len(reacted_users) <= 1:
                     embed = message.embeds[0]
+                    embed.colour = self.bot.main_color
                     embed.description = (
                         f"Giveaway has ended!\n\nSadly no one participated :("
                     )
@@ -363,7 +369,8 @@ class Giveaways(commands.Cog):
                 winners_text = ""
                 for winner in winners:
                     winners_text += f"<@{winner}> "
-
+                    
+                embed.colour = self.bot.main_color
                 embed.description = f"Giveaway has ended!\n\n**{'Winners' if winners_count > 1 else 'Winner'}:** {winners_text}"
                 embed.set_footer(
                     text=f"{winners_count} {'winners' if winners_count > 1 else 'winner'} | Ended at"
