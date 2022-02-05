@@ -49,7 +49,7 @@ class Polls(commands.Cog):
         for i in range(20):
             messages.append(
                 await ctx.send(
-                    f"Say a **Poll option** to add choices or **{ctx.prefix}done** to publish the Poll."
+                    f"What choices should the poll have? | Say {ctx.prefix}done if you're done adding choices."
                 )
             )
 
@@ -73,7 +73,6 @@ class Polls(commands.Cog):
         answer = "\n\n".join(f"{keycap} {content}" for keycap, content in answers)
         embed = discord.Embed(
             color=self.bot.main_color,
-            timestamp=datetime.datetime.utcnow(),
             title=f"{question}",
             description=f"{answer}",
         )
@@ -130,7 +129,6 @@ class Polls(commands.Cog):
             body = "\n\n".join(f"{key} {c}" for key, c in choices)
             embed = discord.Embed(
                 color=self.bot.main_color,
-                timestamp=datetime.datetime.utcnow(),
             title=f"{question}",
             description=f"{body}",
             )
