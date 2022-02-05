@@ -49,7 +49,7 @@ class Polls(commands.Cog):
         for i in range(20):
             messages.append(
                 await ctx.send(
-                    f"What choices should the poll have? | Say {ctx.prefix}done if you're done adding choices."
+                    f"What choices should the poll have? | Say **{ctx.prefix}done** if you're done adding choices."
                 )
             )
 
