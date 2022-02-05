@@ -49,7 +49,7 @@ class Polls(commands.Cog):
         for i in range(20):
             messages.append(
                 await ctx.send(
-                    f"Say a Poll option or {ctx.prefix}done to publish the Poll."
+                    f"Say a **Poll option** to add choices or **{ctx.prefix}done** to publish the Poll."
                 )
             )
 
@@ -77,7 +77,6 @@ class Polls(commands.Cog):
             title=f"{question}",
             description=f"{answer}",
         )
-        embed.set_author(name=ctx.author, icon_url=ctx.author.avatar_url)
         poll = await ctx.send(embed=embed)
         for emoji, _ in answers:
             await poll.add_reaction(emoji)
@@ -118,7 +117,6 @@ class Polls(commands.Cog):
             embed = discord.Embed(
                 color=self.bot.main_color, description=f"**{question}**"
             )
-            embed.set_author(name=ctx.author, icon_url=ctx.author.avatar_url)
             poll = await ctx.send(embed=embed)
             reactions = ["👍", "👎"]
             for emoji in reactions:
