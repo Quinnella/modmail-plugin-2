@@ -134,7 +134,6 @@ class Polls(commands.Cog):
             title=f"{question}",
             description=f"{body}",
             )
-            embed.set_author(name=ctx.author, icon_url=ctx.author.avatar_url)
             poll = await ctx.send(embed=embed)
             for emoji, _ in choices:
                 await poll.add_reaction(emoji)
