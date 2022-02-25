@@ -541,7 +541,7 @@ class ChatGames(commands.Cog):
             timestamp=ctx.message.created_at
         )
         embed.set_footer(text=f'Requested by {ctx.author}')
-        embed.add_field(name='Check the current chat game leaderboard!\n\nUse `{prefix}cgboard all` to see the leaderboard for all games (includes command-invoked games)\nUse `{prefix}cgboard @user/me` to see the stats for a user or yourself', inline=False)
+        embed.add_field(name='Commands', value='Use {prefix}cgboard all to see the leaderboard for all games\nUse {prefix}cgboard @user/me` to see the stats for a user or yourself', inline=False)
         return await ctx.send(embed=embed)
       
         if param == 'me':
