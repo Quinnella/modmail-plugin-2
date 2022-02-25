@@ -8,7 +8,7 @@ def _format_time(seconds):
 
 class Utilities(commands.Cog):
     """
-    Utilities by Abadima
+    Utilities
     """
     def __init__(self, bot):
         self.bot = bot
@@ -24,10 +24,10 @@ class Utilities(commands.Cog):
         """Uptime Statistics"""
     #    bot: discord.ext.commands.Bot = self.bot
         author = ctx.author
-        embed = discord.Embed(colour=author.colour)
+        embed = discord.Embed(colour=self.bot.main_color)
         embed.title = f"Uptime Statistics"
         embed.add_field(name="Duration", value=self.bot.uptime)
-        embed.add_field(name="Heroku Boot:", value=_format_time(self._boot_time))
+        embed.add_field(name="Host Boot:", value=_format_time(self._boot_time))
         embed.add_field(name="Bot Boot:", value=_format_time(self._bot_time))
         await ctx.reply(embed=embed)
         
@@ -41,7 +41,7 @@ class Utilities(commands.Cog):
         cGuild = ctx.guild.member_count
         humans = self.get_humans(ctx)
         bots = self.get_bots(ctx)
-        embed = discord.Embed(colour=ctx.author.colour)
+        embed = discord.Embed(colour=self.bot.main_color)
         embed.title = f"Member Count"
         embed.add_field(name="Members", value=ctx.guild.member_count)
         embed.add_field(name="Humans", value=humans)
