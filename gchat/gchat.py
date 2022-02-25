@@ -27,7 +27,7 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'words.txt'))
 
 class ChatGames(commands.Cog):
     """
-    Thanks Neko!
+    Play for fun or Play to compete!
     """
 
     def __init__(self, bot):
@@ -524,7 +524,93 @@ class ChatGames(commands.Cog):
     @commands.bot_has_permissions(send_messages=True, embed_links=True)
     @commands.command()
     @checks.has_permissions(PermissionLevel.REGULAR)
-    async def cgboard(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
+    async def cgboard_all(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
+        """
+        Check the current chat game leaderboard!
+
+        Use `{prefix}cgboard all` to see the leaderboard for all games (includes command-invoked games)
+        Use `{prefix}cgboard @user/me` to see the stats for a user or yourself
+        """
+        if param == 'me':
+            param = ctx.author
+
+        if isinstance(param, discord.abc.User):
+            user_id = param.id
+            title = f"Chat games stats for {param}"
+            r_first_places = await self._fetch_place('first', user_id=user_id, min_weight=1)
+            r_second_places = await self._fetch_place('second', user_id=user_id, min_weight=1)
+            r_third_places = await self._fetch_place('third', user_id=user_id, min_weight=1)
+            r_participants = await self._fetch_all(user_id=user_id, min_weight=1)
+            first_places = await self._fetch_place('first', user_id=user_id, min_weight=0)
+            second_places = await self._fetch_place('second', user_id=user_id, min_weight=0)
+            third_places = await self._fetch_place('third', user_id=user_id, min_weight=0)
+            participants = await self._fetch_all(user_id=user_id, min_weight=0)
+            embed = discord.Embed(
+                title=title,
+                colour=self.bot.main_color,
+                timestamp=ctx.message.created_at
+            )
+            embed.set_footer(text=f'Requested by {ctx.author}')
+            value = self.double_records_to_value(first_places, r_first_places)
+            embed.add_field(name='First Places', value=value, inline=False)
+            value = self.double_records_to_value(second_places, r_second_places)
+            embed.add_field(name='Second Places', value=value, inline=False)
+            value = self.double_records_to_value(third_places, r_third_places)
+            embed.add_field(name='Third Places', value=value, inline=False)
+            value = self.double_records_to_value(participants, r_participants)
+            embed.add_field(name='Overall Wins', value=value, inline=False)
+            return await ctx.send(embed=embed)
+
+        if param == 'all':
+            weight = 0
+            title = "Chat games leaderboard!"
+        else:
+            weight = 1
+            title = "Chat games leaderboard (ranked)!"
+        first_places = await self._fetch_place('first', min_weight=weight)
+        second_places = await self._fetch_place('second', min_weight=weight)
+        third_places = await self._fetch_place('third', min_weight=weight)
+        participants = await self._fetch_all(min_weight=weight)
+        embed = discord.Embed(
+            title=title,
+            colour=self.bot.main_color,
+            timestamp=ctx.message.created_at
+        )
+        embed.set_footer(text=f'Requested by {ctx.author}')
+        value = self.records_to_value(first_places)
+        embed.add_field(name='Top First Place Winner', value=value, inline=False)
+        value = self.records_to_value(second_places)
+        embed.add_field(name='Top Second Place Winner', value=value, inline=False)
+        value = self.records_to_value(third_places)
+        embed.add_field(name='Top Third Place Winner', value=value, inline=False)
+        value = self.records_to_value(participants)
+        embed.add_field(name='Most Overall Wins', value=value, inline=False)
+        return await ctx.send(embed=embed)
+
+    async def _start_game(self, ctx, event_type):
+        if ctx.channel.id in self.enabled_channels and self.enabled_channels[ctx.channel.id]:
+            if self.enabled_channels[ctx.channel.id][0] is None:
+                return await ctx.send("There's an unfinished game still going on in this channel, "
+                                      "please wait until it finishes!")
+            self.enabled_channels[ctx.channel.id][0].cancel()
+            self.enabled_channels[ctx.channel.id][1].set()
+            self.enabled_channels[ctx.channel.id] = (None, asyncio.Event())
+
+        try:
+            await self._do_event(ctx.channel, weight=0, event_type=event_type)
+        finally:
+            if ctx.channel.id in self.enabled_channels:
+                if not self.enabled_channels[ctx.channel.id] or not self.enabled_channels[ctx.channel.id][1].is_set():
+                    event = asyncio.Event()
+                    self.enabled_channels[ctx.channel.id] = (self.bot.loop.call_later(self.next_wait,
+                                                                                  lambda c=ctx.channel.id,
+                                                                                         e=event: asyncio.create_task(
+                                                                                      self.do_event(c, e))), event)
+    @commands.cooldown(1, 3)
+    @commands.bot_has_permissions(send_messages=True, embed_links=True)
+    @commands.command()
+    @checks.has_permissions(PermissionLevel.REGULAR)
+    async def cgboard_me(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
         """
         Check the current chat game leaderboard!
 
