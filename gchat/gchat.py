@@ -587,18 +587,6 @@ class ChatGames(commands.Cog):
         value = self.records_to_value(participants)
         embed.add_field(name='Most Overall Wins', value=value, inline=False)
         return await ctx.send(embed=embed)
-      
-        if param == None:
-            weight = 1
-            title = "Chat games"
-        embed = discord.Embed(
-            title=title,
-            colour=self.bot.main_color,
-            timestamp=ctx.message.created_at
-        )
-        embed.set_footer(text=f'Requested by {ctx.author}')
-        embed.add_field(name='Commands', value='Use `{prefix}cgboard all` to see the leaderboard for all games\nUse `{prefix}cgboard @user/me`` to see the stats for a user or yourself', inline=False)
-        return await ctx.send(embed=embed)
 
     async def _start_game(self, ctx, event_type):
         if ctx.channel.id in self.enabled_channels and self.enabled_channels[ctx.channel.id]:
