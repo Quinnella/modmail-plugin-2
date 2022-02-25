@@ -29,7 +29,7 @@ class Utilities(commands.Cog):
         embed.add_field(name="Duration", value=self.bot.uptime)
         embed.add_field(name="Host Boot:", value=_format_time(self._boot_time))
         embed.add_field(name="Bot Boot:", value=_format_time(self._bot_time))
-        await ctx.reply(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
         
     @commands.command(aliases=["mcount"])
     @commands.guild_only()
@@ -46,7 +46,7 @@ class Utilities(commands.Cog):
         embed.add_field(name="Members", value=ctx.guild.member_count)
         embed.add_field(name="Humans", value=humans)
         embed.add_field(name="Bots", value=bots)
-        await ctx.reply(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
         
     def get_bots(self, ctx):
         bots = [member for member in ctx.guild.members if member.bot]
