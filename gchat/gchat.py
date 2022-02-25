@@ -524,7 +524,7 @@ class ChatGames(commands.Cog):
     @commands.bot_has_permissions(send_messages=True, embed_links=True)
     @commands.command()
     @checks.has_permissions(PermissionLevel.REGULAR)
-    async def cgboard_all(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
+    async def cgboard all(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
         """
         Check the current chat game leaderboard!
 
@@ -610,7 +610,7 @@ class ChatGames(commands.Cog):
     @commands.bot_has_permissions(send_messages=True, embed_links=True)
     @commands.command()
     @checks.has_permissions(PermissionLevel.REGULAR)
-    async def cgboard_me(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
+    async def cgboard me(self, ctx, param: typing.Union[discord.Member, discord.User, str.lower] = None):
         """
         Check the current chat game leaderboard!
 
