@@ -27,7 +27,7 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'words.txt'))
 
 class ChatGames(commands.Cog):
     """
-    Thanks Neko!
+    Play for fun or Play to compete!
     """
 
     def __init__(self, bot):
@@ -567,10 +567,6 @@ class ChatGames(commands.Cog):
         else:
             weight = 1
             title = "Chat games leaderboard (ranked)!"
-        first_places = await self._fetch_place('first', min_weight=weight)
-        second_places = await self._fetch_place('second', min_weight=weight)
-        third_places = await self._fetch_place('third', min_weight=weight)
-        participants = await self._fetch_all(min_weight=weight)
         embed = discord.Embed(
             title=title,
             colour=self.bot.main_color,
@@ -578,13 +574,7 @@ class ChatGames(commands.Cog):
         )
         embed.set_footer(text=f'Requested by {ctx.author}')
         value = self.records_to_value(first_places)
-        embed.add_field(name='Top First Place Winner', value=value, inline=False)
-        value = self.records_to_value(second_places)
-        embed.add_field(name='Top Second Place Winner', value=value, inline=False)
-        value = self.records_to_value(third_places)
-        embed.add_field(name='Top Third Place Winner', value=value, inline=False)
-        value = self.records_to_value(participants)
-        embed.add_field(name='Most Overall Wins', value=value, inline=False)
+        embed.add_field(name='Check the current chat game leaderboard\nUse `{prefix}cgboard all` to see the leaderboard for all games (includes command-invoked games)\nUse `{prefix}cgboard @user/me` to see the stats for a user or yourself', inline=False)
         return await ctx.send(embed=embed)
 
     async def _start_game(self, ctx, event_type):
